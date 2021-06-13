@@ -10,11 +10,13 @@
 </template>
 
 <script>
+import {bus} from '../main';
 export default {
   name: 'Loading',
   data(){
       return{
-          show:true
+          show:true,
+          bus_datainfo:false,
       }
   },
   mounted(){
@@ -24,7 +26,11 @@ export default {
       showToggle(){
           setTimeout(() => {
               this.show=false;
+              this.bus_datainfo=true;
+              console.log(this.bus_datainfo)
+              bus.$emit('sendData',this.bus_datainfo);
           }, 3000);
+          
       }
   }
 }

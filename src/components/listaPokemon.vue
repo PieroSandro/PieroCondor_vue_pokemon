@@ -1,6 +1,6 @@
 <template>
   
-   <div class="container">
+   <div v-if="show_container" class="container">
    
    <div id="big_input" class="card">
    
@@ -11,6 +11,19 @@
                    />
                 </div></div>
     
+    <div id=results_of_search>
+        {{data_de_pokemon}}
+    </div>
+    <table border="1px">
+        <tr>
+            <td>Nombre</td>
+            <td>url</td>
+        </tr>
+        <tr v-for="item in list_allpokemon" v-bind:key="item.url">
+            <td>{{item.name}}</td>
+            <td @click="data_this_pokemon(item.url)">{{item.url}}</td>
+        </tr>
+    </table>
     </div>
     
   
@@ -19,8 +32,49 @@
 
 
 <script>
+import {bus} from '../main';
+
+import Vue from 'vue'
+import axios from 'axios'
+import VueAxios from 'vue-axios'
+Vue.use(VueAxios,axios)
+
 export default {
   name: 'ListaPokemon',
+  data(){
+      return{
+          show_container:false,
+          data_de_pokemon:'',
+          list_allpokemon:undefined
+      }
+  },
+  methods:{
+      data_this_pokemon(url_this_pokemon){
+           Vue.axios.get(url_this_pokemon)
+    .then((resp)=>{
+        console.log(resp.data.name+" "+resp.data.height)
+    }
+
+    )
+      }
+  },
+
+   created(){
+    bus.$on('sendData',(data)=>{
+      this.show_container=data;
+      console.log('show container is '+this.show_container)
+    })
+  },
+  mounted(){
+    Vue.axios.get('https://pokeapi.co/api/v2/pokemon')
+    .then((resp)=>{
+        this.list_allpokemon=resp.data.results;
+        console.warn(resp.data.results)
+        
+    }
+
+    )
+}
 
 }
 </script>
@@ -32,6 +86,17 @@ export default {
   align-items: center;
   flex-direction: column;
   justify-content: center;
+}
+
+#results_of_search{
+    margin-top:40px;
+ height:106px;
+  width:106px;
+  border-style: solid;
+  border-width:1px;
+  border-color:red;
+ /*border-bottom:1px solid rgba(0,0,0,0.1);*/
+  overflow:hidden;
 }
 
 .card-body{
