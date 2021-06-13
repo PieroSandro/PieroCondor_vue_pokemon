@@ -1,7 +1,9 @@
 <template>
   <transition name="fade">
       <div v-if="show" class="preloader">
-          <div class="logo"></div>
+          <div class="logo">
+              <img id="img_pokeball" src="../assets/img/pokeball.png">
+          </div>
          <!-- <p>Cargando</p>-->
       </div>
   </transition>
@@ -16,13 +18,13 @@ export default {
       }
   },
   mounted(){
-      this.showToggle();
+     this.showToggle();
   },
   methods:{
       showToggle(){
           setTimeout(() => {
               this.show=false;
-          }, 2000);
+          }, 3000);
       }
   }
 }
@@ -42,11 +44,25 @@ export default {
 }
 
 .logo{
-    width:12.5rem;
+   /* width:12.5rem;
     height:12.5rem;
     background-image: url('../assets/img/pokeball.png');
-    background-repeat:no-repeat;
+    background-repeat:no-repeat;*/
+    height:106px;
+  width:106px;
+  /*border-style: solid;
+  border-width:1px;
+  border-color:red;
+ border-bottom:1px solid rgba(0,0,0,0.1);*/
+  overflow:hidden;
 }
+
+
+#img_pokeball{
+max-width:100%;
+max-height:100%;
+}
+
 /*
 p{
     font:600 1.5rem;
@@ -54,12 +70,12 @@ p{
 }
 */
 .fade-enter-active, .fade-leave-active{
-    transition:opacity 2s;
+    transition:opacity 3s;
 }
 
 .logo{
     animation-name: scaleOut;
-    animation-duration: 2s;
+    animation-duration: 3s;
 }
 
 /*
