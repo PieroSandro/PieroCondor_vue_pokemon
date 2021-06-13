@@ -1,16 +1,18 @@
 <template>
   
    <div v-if="show_container" class="container">
-   
    <div id="big_input" class="card">
    
     <div class="input-group">
                  <i class="fas fa-search iconsearch"></i>
                   <input type="text" id="input_search" class="form-control rounded" 
+                  @keyup="focus_input_text()" v-model="text_model"
                   placeholder="Search"
                    />
                 </div></div>
-    
+    <div v-if="show_no_results" id="no_results">
+      <NoResults/>
+    </div>
     <div id=results_of_search>
         {{data_de_pokemon}}
     </div>
@@ -32,6 +34,7 @@
 
 
 <script>
+import NoResults from '../components/noResults.vue'
 import {bus} from '../main';
 
 import Vue from 'vue'
@@ -41,11 +44,16 @@ Vue.use(VueAxios,axios)
 
 export default {
   name: 'ListaPokemon',
+   components: {
+    NoResults
+  },
   data(){
       return{
           show_container:false,
           data_de_pokemon:'',
-          list_allpokemon:undefined
+          list_allpokemon:undefined,
+          text_model:'',
+          show_no_results:false,
       }
   },
   methods:{
@@ -56,6 +64,22 @@ export default {
     }
 
     )
+      }
+      ,
+      focus_input_text(){
+        this.data_de_pokemon=''
+        this.show_no_results=false
+        let text_model_lower=this.text_model.toLowerCase();
+         for (let item_pokemon of this.list_allpokemon){
+           let name_pokemon_lower=item_pokemon.name.toLowerCase();
+           if(name_pokemon_lower.indexOf(text_model_lower)!==-1){
+            this.data_de_pokemon+=item_pokemon.name+' - '
+           }
+       }
+        if(this.data_de_pokemon===''){
+           this.data_de_pokemon+='no hay'
+           this.show_no_results=true
+       }
       }
   },
 
@@ -95,6 +119,16 @@ export default {
   border-style: solid;
   border-width:1px;
   border-color:red;
+ /*border-bottom:1px solid rgba(0,0,0,0.1);*/
+  overflow:hidden;
+}
+
+
+#no_results{
+    margin-top:50px;
+ height:152px;
+ /* width:106px;*/
+ 
  /*border-bottom:1px solid rgba(0,0,0,0.1);*/
   overflow:hidden;
 }
@@ -158,6 +192,10 @@ max-height:100%;
    border:none;
    
 }
+
+#no_results{
+  width:262px;
+}
         
 }
 
@@ -172,6 +210,11 @@ max-height:100%;
   box-shadow:0px 2px 10px rgba(0,0,0,0.04);
    border:none;
   
+}
+
+
+#no_results{
+  width:570px;
 }
         
 }
