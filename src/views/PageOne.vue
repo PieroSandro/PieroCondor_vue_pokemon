@@ -1,18 +1,20 @@
 <template>
   <div id="app">
     <Loading/>
-    <div>aqui estamos</div>
+    <ListaPokemon/>
   </div>
 </template>
 
 
 <script>
 import Loading from '../components/loading.vue'
+import ListaPokemon from '../components/listaPokemon.vue'
 
 export default {
   name: 'App',
   components: {
-    Loading
+    Loading,
+    ListaPokemon
   }
 }
 </script>

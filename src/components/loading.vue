@@ -39,7 +39,7 @@ export default {
     position:absolute;
     width:100%;
     height:100%;
-    background-color:white;
+    background-color:#F9F9F9;
     z-index:9999;
 }
 
