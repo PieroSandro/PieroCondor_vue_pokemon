@@ -13,7 +13,14 @@
     <div v-if="show_no_results" id="no_results">
       <NoResults/>
     </div>
-    <div id=results_of_search>
+     <div id="list_of_results">
+     <div v-for="item in list_allpokemon" v-bind:key="item.url">
+          <div class="card pokemoncard">
+                  hi
+          </div>
+    </div>
+    </div>
+    <div id="results_of_search">
         {{data_de_pokemon}}
     </div>
     <table border="1px">
@@ -88,6 +95,8 @@ export default {
       this.show_container=data;
       console.log('show container is '+this.show_container)
     })
+    ,
+    this.data_de_pokemon='hola'
   },
   mounted(){
     Vue.axios.get('https://pokeapi.co/api/v2/pokemon')
@@ -110,6 +119,17 @@ export default {
   align-items: center;
   flex-direction: column;
   justify-content: center;
+}
+
+
+#list_of_results{
+    margin-top:40px;
+ 
+/*  width:106px;*/
+  border-style: solid;
+  border-width:1px;
+  border-color:red;
+  overflow:hidden;
 }
 
 #results_of_search{
@@ -196,7 +216,24 @@ max-height:100%;
 #no_results{
   width:262px;
 }
-        
+
+#list_of_results{
+  width:315px;
+}
+
+
+.pokemoncard{
+ margin-top:0px;
+   margin-right:0px;
+    margin-left:0px;
+    margin-bottom:10px;
+  width:315px;
+  height:60px;
+  overflow:hidden;
+  border-radius:5px;
+  background-color:#FFFFFF;
+  border:none;
+}    
 }
 
 @media screen and (min-width: 576px) {
@@ -215,6 +252,23 @@ max-height:100%;
 
 #no_results{
   width:570px;
+}
+
+#list_of_results{
+  width:570px;
+}
+
+.pokemoncard{
+  margin-top:0px;
+  margin-right:0px;
+  margin-left:0px;
+  margin-bottom:10px;
+  width:570px;
+  height:60px;
+  overflow:hidden;
+  border-radius:5px;
+  background-color:BLUE;
+  border:none;
 }
         
 }
