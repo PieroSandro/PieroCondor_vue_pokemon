@@ -2,13 +2,14 @@
   
    <div class="container">
    
-   <div class="card mb-2">
-   <div class="card-body d-flex justify-content-between py-2">
-    <div class="input-group input-group-lg">
-                  <span class="input-group-text border-0 px-1" id="basic-addon2"><i class="fas fa-search fa-lg" style="color: #939597;"></i></span>
-                  <input type="text" class="form-control form-control-lg rounded" placeholder="Search"
-                    aria-label="Search" aria-describedby="basic-addon2" />
-                </div></div></div>
+   <div id="big_input" class="card">
+   
+    <div class="input-group">
+                 <i class="fas fa-search iconsearch"></i>
+                  <input type="text" id="input_search" class="form-control rounded" 
+                  placeholder="Search"
+                   />
+                </div></div>
     
     </div>
     
@@ -33,29 +34,80 @@ export default {
   justify-content: center;
 }
 
-.form-control {
-  border-color: transparent;
+.card-body{
+    max-width:100%;
+max-height:100%;
 }
-.input-group-text{
-    background-color:white;
-}
+
 .input-group{
-    border-color:grey;
+    height:50px;
 }
-.input-group>.form-control:focus {
-  border-color: transparent;
-  box-shadow: inset 0 0 0 1px transparent;
+
+.iconsearch{
+     font-size:18px;
+     color:#BFBFBF;
+     height:18px;
+
+     margin-left:15px;
+     margin-top:auto;
+     margin-bottom:auto;
 }
-.btn-link:hover {
-  background-color: rgba(0,0,0,.05);
+
+#input_search{
+    padding-right:10px;
+    padding-left:10px;
+
+    font-family:'Montserrat';
+  font-style: normal;
+  font-weight: 500;
+
+  font-size:16px;
+  line-height:140%;
+  
+  color:#353535;
+  border:none;
+  text-decoration: none;
+  background-color:#FFFFFF;
+  
 }
-.btn-link:active, .btn-link.active {
-  background-color: rgba(0,0,0,.05);
+
+#input_search:focus{
+   outline:none;
+  box-shadow: none;
 }
-.btn-link:focus, .btn-link.focus {
-  background-color: rgba(0,0,0,.05);
+::-webkit-input-placeholder {
+  color: #BFBFBF !important;
 }
-.btn-link:active:focus, .btn-link.active:focus {
-  background-color: rgba(0,0,0,.05);
+
+@media screen and (max-width: 575px) {
+  
+#big_input{
+  margin-top:35px;
+  height:50px;
+  width:315px;
+ 
+  overflow:hidden;
+  border-radius:5px;
+  background-color:#FFFFFF;
+  box-shadow:0px 2px 10px rgba(0,0,0,0.04);
+   border:none;
+   
+}
+        
+}
+
+@media screen and (min-width: 576px) {
+#big_input{
+  margin-top:35px;
+  height:50px;
+  width:570px;
+  overflow:hidden;
+  border-radius:5px;
+  background-color:#FFFFFF;
+  box-shadow:0px 2px 10px rgba(0,0,0,0.04);
+   border:none;
+  
+}
+        
 }
 </style>
