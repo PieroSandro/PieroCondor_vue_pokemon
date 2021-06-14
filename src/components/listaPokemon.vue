@@ -76,6 +76,7 @@
             <td @click="data_this_pokemon(item.url)">{{item.url}}</td>
         </tr>
     </table>
+    <ModalDetails/>
     </div>
     
   
@@ -85,6 +86,7 @@
 
 <script>
 import NoResults from '../components/noResults.vue'
+import ModalDetails from '../components/modalDetails.vue'
 import {bus} from '../main';
 
 import Vue from 'vue'
@@ -95,7 +97,8 @@ Vue.use(VueAxios,axios)
 export default {
   name: 'ListaPokemon',
    components: {
-    NoResults
+    NoResults,
+    ModalDetails
   },
   data(){
       return{
@@ -106,6 +109,7 @@ export default {
           text_model:'',
           show_no_results:false,
           inactive_pokemon:true,
+         // show_modal:false,
       }
   },
    filters: {
@@ -125,6 +129,7 @@ export default {
       return index===Math.floor(Math.random() * 20) ? 'Favorito':'No Favorito'
    },
       data_this_pokemon(url_this_pokemon){
+     //   this.show_modal=true
            Vue.axios.get(url_this_pokemon)
     .then((resp)=>{
         console.log(resp.data.name+" "+resp.data.height)
@@ -369,7 +374,8 @@ max-height:100%;
 .navbar{
   height:80px;
   background-color:#FFFFFF;
-  box-shadow:0px -5px 4px rgba(0,0,0,0.5)
+  box-shadow:0px -5px 4px rgba(0,0,0,0.5);
+  z-index:2;
 }
 
 /*button{
