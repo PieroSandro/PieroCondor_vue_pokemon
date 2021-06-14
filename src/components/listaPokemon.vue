@@ -5,11 +5,11 @@
   
   <div class="row align-items-center">
   <div class="col">
-  <button @click="inactive_pokemon=true" id="button_all" type="button" class="btn float-end"><i id="icon_list" class="fas fa-list"></i><span class="label_text">All</span></button>
+  <button @click="inactive_pokemon=true" v-bind:style="{backgroundColor:inactive_pokemon?'#F22539':'#BFBFBF'}" id="button_all" type="button" class="btn float-end"><i id="icon_list" class="fas fa-list"></i><span class="label_text">All</span></button>
   </div>
 
   <div class="col">
-  <button @click="inactive_pokemon=false" id="button_favorites" type="button" class="btn float-start"><i id="icon_star" class="fas fa-star"></i><span class="label_text">Favorites</span></button>
+  <button @click="inactive_pokemon=false" v-bind:style="{backgroundColor:!inactive_pokemon?'#F22539':'#BFBFBF'}" id="button_favorites" type="button" class="btn float-start"><i id="icon_star" class="fas fa-star"></i><span class="label_text">Favorites</span></button>
   </div>
   </div>
 </nav>
@@ -379,7 +379,7 @@ max-height:100%;
 }*/
 
 #button_all, #button_favorites{
-  background-color:#BFBFBF;
+ /* background-color:#BFBFBF;*/
   height:44px;
   border-radius:60px;
   margin-top:auto;
