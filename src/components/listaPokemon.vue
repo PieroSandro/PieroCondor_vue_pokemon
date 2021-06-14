@@ -1,6 +1,18 @@
 <template>
   
    <div v-if="show_container" class="container">
+   <nav v-if="show_navbar" class="navbar fixed-bottom">
+  
+  <div class="row align-items-center">
+  <div class="col">
+  <button id="button_all" type="button" class="btn float-end"><i id="icon_list" class="fas fa-list"></i><span class="label_text">All</span></button>
+  </div>
+
+  <div class="col">
+  <button id="button_favorites" type="button" class="btn float-start"><i id="icon_star" class="fas fa-star"></i><span class="label_text">Favorites</span></button>
+  </div>
+  </div>
+</nav>
    <div id="big_input" class="card">
    
     <div class="input-group">
@@ -16,7 +28,7 @@
      <div id="list_of_results">
      <div v-for="item in list_allpokemon" v-bind:key="item.url">
           <div class="card pokemoncard">
-                  hi
+                {{item.name}}
           </div>
     </div>
     </div>
@@ -57,6 +69,7 @@ export default {
   data(){
       return{
           show_container:false,
+          show_navbar:true,
           data_de_pokemon:'',
           list_allpokemon:undefined,
           text_model:'',
@@ -75,6 +88,7 @@ export default {
       ,
       focus_input_text(){
         this.data_de_pokemon=''
+        this.show_navbar=true
         this.show_no_results=false
         let text_model_lower=this.text_model.toLowerCase();
          for (let item_pokemon of this.list_allpokemon){
@@ -86,6 +100,7 @@ export default {
         if(this.data_de_pokemon===''){
            this.data_de_pokemon+='no hay'
            this.show_no_results=true
+           this.show_navbar=false
        }
       }
   },
@@ -121,6 +136,14 @@ export default {
   justify-content: center;
 }
 
+.row{
+  width:100%;
+  margin:0;
+}
+
+.col{
+  padding:0;
+}
 
 #list_of_results{
     margin-top:40px;
@@ -199,7 +222,16 @@ max-height:100%;
 }
 
 @media screen and (max-width: 575px) {
-  
+#button_all, #button_favorites{
+  width:150px;
+}
+
+#button_all{
+  margin-right:7.5px;
+}
+#button_favorites{
+  margin-left:7.5px;
+}
 #big_input{
   margin-top:35px;
   height:50px;
@@ -237,6 +269,16 @@ max-height:100%;
 }
 
 @media screen and (min-width: 576px) {
+#button_all, #button_favorites{
+  width:275px;
+}
+
+#button_all{
+  margin-right:10px;
+}
+#button_favorites{
+  margin-left:10px;
+}
 #big_input{
   margin-top:35px;
   height:50px;
@@ -271,5 +313,45 @@ max-height:100%;
   border:none;
 }
         
+}
+
+.navbar{
+  height:80px;
+  background-color:#FFFFFF;
+  box-shadow:0px -5px 4px rgba(0,0,0,0.5)
+}
+
+/*button{
+  margin-left:0;
+   margin-right:0;
+  background-color:#BFBFBF;
+}*/
+
+#button_all, #button_favorites{
+  background-color:#BFBFBF;
+  height:44px;
+  border-radius:60px;
+  margin-top:auto;
+  margin-bottom:auto;
+  color:#FFFFFF;
+}
+
+#icon_list, #icon_star{
+  font-size:22px;
+  margin-right:11px;
+   margin-top:auto;
+   margin-bottom:auto;
+}
+
+.label_text{
+  height:22px;
+  font-family: 'Lato';
+  font-style:normal;
+  font-weight:bold;
+  font-size:18px;
+  line-height:22px;
+  
+  align-items:center;
+  text-align:center;
 }
 </style>
