@@ -5,11 +5,11 @@
   
   <div class="row align-items-center">
   <div class="col">
-  <button id="button_all" type="button" class="btn float-end"><i id="icon_list" class="fas fa-list"></i><span class="label_text">All</span></button>
+  <button @click="inactive_pokemon=true" id="button_all" type="button" class="btn float-end"><i id="icon_list" class="fas fa-list"></i><span class="label_text">All</span></button>
   </div>
 
   <div class="col">
-  <button id="button_favorites" type="button" class="btn float-start"><i id="icon_star" class="fas fa-star"></i><span class="label_text">Favorites</span></button>
+  <button @click="inactive_pokemon=false" id="button_favorites" type="button" class="btn float-start"><i id="icon_star" class="fas fa-star"></i><span class="label_text">Favorites</span></button>
   </div>
   </div>
 </nav>
@@ -26,10 +26,41 @@
       <NoResults/>
     </div>
      <div id="list_of_results">
-     <div v-for="item in list_allpokemon" v-bind:key="item.url">
-          <div class="card pokemoncard">
-                {{item.name}}
-          </div>
+     <div v-for="(item,index) in list_allpokemon" v-bind:key="item.url">
+          <!--<div @click="data_this_pokemon(item.url)" class="card pokemoncard">-->
+                <template v-if="favoritePokemon(index)==='Favorito'">
+                  <div @click="data_this_pokemon(item.url)" class="card pokemoncard">
+                  <div class="row align-items-center pokedetails">
+                    <div class="col">
+                 <p class="text_pokename float-start">{{item.name | capitalize}}</p>
+                    </div>
+                    <div class="col">
+               <!--  <template v-if="favoritePokemon(index)==='Favorito'">-->
+                  <img class="icon_star float-end" src="../assets/img/active_star.png">
+               <!--   </template>
+                <template v-else>
+                    <img class="icon_star float-end" src="../assets/img/inactive_star.png">
+                 </template>-->
+                    </div>
+                  </div></div>
+                </template>
+                <template v-else>
+                  <div v-show="inactive_pokemon" @click="data_this_pokemon(item.url)" class="card pokemoncard">
+                   <div class="row align-items-center pokedetails">
+                    <div class="col">
+                 <p class="text_pokename float-start">{{item.name | capitalize}}</p>
+                    </div>
+                    <div class="col">
+               <!--  <template v-if="favoritePokemon(index)==='Favorito'">-->
+                  <img class="icon_star float-end" src="../assets/img/inactive_star.png">
+               <!--   </template>
+                <template v-else>
+                    <img class="icon_star float-end" src="../assets/img/inactive_star.png">
+                 </template>-->
+                    </div>
+                  </div></div>
+                </template>
+         <!-- </div>-->
     </div>
     </div>
     <div id="results_of_search">
@@ -74,13 +105,31 @@ export default {
           list_allpokemon:undefined,
           text_model:'',
           show_no_results:false,
+          inactive_pokemon:true,
       }
   },
+   filters: {
+  capitalize: function (value) {
+    if (!value) return ''
+    value = value.toString()
+    return value.charAt(0).toUpperCase() + value.slice(1)
+  }
+},
+  computed:{
+  
+
+  },
   methods:{
+     favoritePokemon(index){
+      //if(index==Math.floor(Math.random() * 20)) 
+      return index===Math.floor(Math.random() * 20) ? 'Favorito':'No Favorito'
+   },
       data_this_pokemon(url_this_pokemon){
            Vue.axios.get(url_this_pokemon)
     .then((resp)=>{
         console.log(resp.data.name+" "+resp.data.height)
+        console.log(resp.data)
+        console.log(this.list_allpokemon[0])
     }
 
     )
@@ -265,6 +314,7 @@ max-height:100%;
   border-radius:5px;
   background-color:#FFFFFF;
   border:none;
+  cursor:pointer;
 }    
 }
 
@@ -309,8 +359,9 @@ max-height:100%;
   height:60px;
   overflow:hidden;
   border-radius:5px;
-  background-color:BLUE;
+  background-color:#FFFFFF;
   border:none;
+  cursor:pointer;
 }
         
 }
@@ -353,5 +404,30 @@ max-height:100%;
   
   align-items:center;
   text-align:center;
+}
+
+.icon_star{
+  height:44px;
+  width:44px;
+   margin-right:8px;
+}
+
+.text_pokename{
+  margin:0;
+}
+
+.pokedetails{
+  height:60px;
+}
+
+.text_pokename{
+ margin-left:20px;
+ height:26px;
+ font-family:'Lato';
+ font-style:normal;
+ font-weight:500;
+ font-size:22px;
+ line-height:26px;
+ color:#353535;
 }
 </style>
