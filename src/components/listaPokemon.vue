@@ -76,7 +76,6 @@
             <td @click="data_this_pokemon(item.url)">{{item.url}}</td>
         </tr>
     </table>
-    <ModalDetails/>
     </div>
     
   
@@ -86,7 +85,6 @@
 
 <script>
 import NoResults from '../components/noResults.vue'
-import ModalDetails from '../components/modalDetails.vue'
 import {bus} from '../main';
 
 import Vue from 'vue'
@@ -98,7 +96,6 @@ export default {
   name: 'ListaPokemon',
    components: {
     NoResults,
-    ModalDetails
   },
   data(){
       return{
@@ -110,6 +107,7 @@ export default {
           show_no_results:false,
           inactive_pokemon:true,
          // show_modal:false,
+         datapokemon_object:{}
       }
   },
    filters: {
@@ -132,12 +130,20 @@ export default {
      //   this.show_modal=true
            Vue.axios.get(url_this_pokemon)
     .then((resp)=>{
-        console.log(resp.data.name+" "+resp.data.height)
-        console.log(resp.data)
-        console.log(this.list_allpokemon[0])
+       console.log(resp.data)
+        this.datapokemon_object={
+          namePokemon:resp.data.name,
+          heightPokemon:resp.data.height,
+          weightPokemon:resp.data.weight,
+          typesPokemon:resp.data.types
+        }
+        
+         bus.$emit('busDataPokemon',this.datapokemon_object);
     }
-
+ 
     )
+   
+   // bus.$emit('busDataPokemon',this.datapokemon_object);
       }
       ,
       focus_input_text(){
