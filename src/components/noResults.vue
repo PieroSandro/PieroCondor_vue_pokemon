@@ -2,7 +2,7 @@
     <div class="container">
     <p id="text_1">Uh-oh!</p>
       <p id="text_2">You look lost on your journey!</p>
-      <button id="red_button" type="button" class="btn">Go back home</button>
+       <router-link to="/"><button id="red_button" type="button" class="btn">Go back home</button></router-link>
     </div>
   
 

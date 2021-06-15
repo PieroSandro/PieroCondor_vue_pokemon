@@ -24,10 +24,15 @@
     </div>
     </div>
   </div>
-       {{namePk}}<br>
-      {{heightPk}}<br>
-      {{weightPk}}<br>
-       {{typesPk}}<br>
+       Name: {{namePk}}<br><br>
+      Height: {{heightPk}}<br><br>
+      Weight: {{weightPk}}<br><br>
+      Types:<br>
+      <template v-for="type_item in types_array">
+    <div :key="type_item">
+    <label>{{type_item}}</label>
+    </div>
+  </template>
      <!--  <img @click="show_modal=false" style="size:26px;" src="../assets/img/close_icon.png">-->
   </div>
     </div>

@@ -16,7 +16,7 @@
    <div id="big_input" class="card">
    
     <div class="input-group">
-                 <i class="fas fa-search iconsearch"></i>
+                 <i @click="focus_input_text()" class="fas fa-search iconsearch"></i>
                   <input type="text" id="input_search" class="form-control rounded" 
                   @keyup="focus_input_text()" v-model="text_model"
                   placeholder="Search"
@@ -25,7 +25,7 @@
     <div v-if="show_no_results" id="no_results">
       <NoResults/>
     </div>
-     <div id="list_of_results">
+     <div v-if="total_results" id="list_of_results">
      <div v-for="(item,index) in list_allpokemon" v-bind:key="item.url">
           <!--<div @click="data_this_pokemon(item.url)" class="card pokemoncard">-->
                 <template v-if="favoritePokemon(index)==='Favorito'">
@@ -63,19 +63,7 @@
          <!-- </div>-->
     </div>
     </div>
-    <div id="results_of_search">
-        {{data_de_pokemon}}
-    </div>
-    <table border="1px">
-        <tr>
-            <td>Nombre</td>
-            <td>url</td>
-        </tr>
-        <tr v-for="item in list_allpokemon" v-bind:key="item.url">
-            <td>{{item.name}}</td>
-            <td @click="data_this_pokemon(item.url)">{{item.url}}</td>
-        </tr>
-    </table>
+  
     </div>
     
   
@@ -102,12 +90,14 @@ export default {
           show_container:false,
           show_navbar:true,
           data_de_pokemon:'',
-          list_allpokemon:undefined,
+          list_allpokemon:[],
           text_model:'',
           show_no_results:false,
           inactive_pokemon:true,
          // show_modal:false,
-         datapokemon_object:{}
+         datapokemon_object:{},
+         total_results:true,
+         console_allpokemon:[],
       }
   },
    filters: {
@@ -124,7 +114,7 @@ export default {
   methods:{
      favoritePokemon(index){
       //if(index==Math.floor(Math.random() * 20)) 
-      return index===Math.floor(Math.random() * 20) ? 'Favorito':'No Favorito'
+      return index%3==0 ? 'Favorito':'No Favorito'
    },
       data_this_pokemon(url_this_pokemon){
      //   this.show_modal=true
@@ -148,20 +138,24 @@ export default {
       }
       ,
       focus_input_text(){
-        this.data_de_pokemon=''
+        this.list_allpokemon=[];
+     //   this.data_de_pokemon=''
         this.show_navbar=true
+        this.total_results=true
         this.show_no_results=false
         let text_model_lower=this.text_model.toLowerCase();
-         for (let item_pokemon of this.list_allpokemon){
+         for (let item_pokemon of this.console_allpokemon){
            let name_pokemon_lower=item_pokemon.name.toLowerCase();
            if(name_pokemon_lower.indexOf(text_model_lower)!==-1){
-            this.data_de_pokemon+=item_pokemon.name+' - '
+      //     this.data_de_pokemon+=item_pokemon.name+' - '
+          this.list_allpokemon.push({name:item_pokemon.name,url:item_pokemon.url})
            }
        }
-        if(this.data_de_pokemon===''){
-           this.data_de_pokemon+='no hay'
+        if(this.list_allpokemon.length==0){
+       //    this.data_de_pokemon+='no hay'
            this.show_no_results=true
            this.show_navbar=false
+           this.total_results=false
        }
       }
   },
@@ -171,13 +165,12 @@ export default {
       this.show_container=data;
       console.log('show container is '+this.show_container)
     })
-    ,
-    this.data_de_pokemon='hola'
   },
   mounted(){
     Vue.axios.get('https://pokeapi.co/api/v2/pokemon')
     .then((resp)=>{
         this.list_allpokemon=resp.data.results;
+         this.console_allpokemon=resp.data.results;
         console.warn(resp.data.results)
         
     }
@@ -209,10 +202,10 @@ export default {
 #list_of_results{
     margin-top:40px;
  
-/*  width:106px;*/
+/*  width:106px;
   border-style: solid;
   border-width:1px;
-  border-color:red;
+  border-color:red;*/
   overflow:hidden;
 }
 
@@ -254,6 +247,7 @@ max-height:100%;
      margin-left:15px;
      margin-top:auto;
      margin-bottom:auto;
+     cursor:pointer;
 }
 
 #input_search{
