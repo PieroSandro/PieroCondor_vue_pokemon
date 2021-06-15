@@ -135,9 +135,10 @@ export default {
           namePokemon:resp.data.name,
           heightPokemon:resp.data.height,
           weightPokemon:resp.data.weight,
-          typesPokemon:resp.data.types
+          typesPokemon:resp.data.types,
+          imgPokemon:resp.data.sprites.front_default,
         }
-        
+       // console.log('imagen: '+this.datapokemon_object.i)
          bus.$emit('busDataPokemon',this.datapokemon_object);
     }
  
